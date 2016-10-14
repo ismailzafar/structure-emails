@@ -1,7 +1,7 @@
 {
-  "name": "structure-organizations",
-  "version": "0.0.12",
-  "description": "Organizations, cause everybody works for someone",
+  "name": "structure-emails",
+  "version": "0.0.1",
+  "description": "Emails",
   "main": "dist/index.js",
   "dependencies": {
     "ajv": "^4.7.7",
@@ -56,7 +56,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/f12/structure-organizations.git"
+    "url": "git+https://github.com/f12/structure-emails.git"
   },
   "keywords": [
     "structure",
@@ -65,7 +65,7 @@
   "author": "Chris Abrams <mail@chrisabrams.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/f12/structure-organizations/issues"
+    "url": "https://github.com/f12/structure-emails/issues"
   },
-  "homepage": "https://github.com/f12/structure-organizations#readme"
+  "homepage": "https://github.com/f12/structure-emails#readme"
 }
