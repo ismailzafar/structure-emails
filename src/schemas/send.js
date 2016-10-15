@@ -33,6 +33,9 @@ export default function schemaSend(req, res, next) {
 
   const pkg = req.body
 
+  if(!pkg.from) pkg.from = process.env.EMAIL_FROM
+  pkg.from = pkg.from.toLowerCase()
+
   const valid = validate(pkg)
 
   if(!valid) return next(validate.errors)
