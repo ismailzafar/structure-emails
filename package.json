@@ -1,6 +1,6 @@
 {
   "name": "structure-emails",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Emails",
   "main": "dist/index.js",
   "dependencies": {
