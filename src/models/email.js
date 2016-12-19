@@ -1,4 +1,5 @@
 import logger from 'structure-logger'
+import r from 'structure-driver'
 import RootModel from 'structure-root-model'
 
 /**
@@ -28,7 +29,7 @@ export default class EmailModel extends RootModel {
 
       try {
 
-        const res = await this.r
+        const res = await r
           .table(this.table)
           .insert({id: appId}, {returnChanges: true})
 
@@ -52,7 +53,7 @@ export default class EmailModel extends RootModel {
 
       try {
 
-        const res = await this.r
+        const res = await r
           .table(this.table)
           .get(appId)
 
@@ -78,7 +79,7 @@ export default class EmailModel extends RootModel {
 
       try {
 
-        const res = await this.r
+        const res = await r
           .table(this.table)
           .insert(pkg, {
             conflict: 'update',

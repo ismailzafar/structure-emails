@@ -3,9 +3,7 @@ import Migrations from 'structure-migrations'
 import MockHTTPServer from '../helpers/mock-http-server'
 import pluginsList from '../helpers/plugins'
 import {q} from '../../src/jobs/send'
-import r from '../helpers/driver'
 
-Migrations.prototype.r = r
 const server = new MockHTTPServer()
 
 describe('Routes', function() {
