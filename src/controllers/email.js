@@ -25,22 +25,25 @@ export default class Controller extends RootController {
 
   createApplicationEmails(req, res) {
 
+    const applicationId = req.headers.applicationid
     const emailModel = new EmailModel()
 
-    return emailModel.createApplicationEmails(req.params.applicationId)
+    return emailModel.createApplicationEmails(applicationId)
 
   }
 
   getApplicationEmails(req, res) {
 
+    const applicationId = req.headers.applicationid
     const emailModel = new EmailModel()
 
-    return emailModel.getApplicationEmails(req.params.applicationId)
+    return emailModel.getApplicationEmails(applicationId)
 
   }
 
   send(req, res) {
 
+    const applicationId = req.headers.applicationid
     const pkg = req.body
 
     emailJob(pkg)
@@ -51,9 +54,10 @@ export default class Controller extends RootController {
 
   updateApplicationEmails(req, res) {
 
+    const applicationId = req.headers.applicationid
     const emailModel = new EmailModel()
 
-    return emailModel.updateApplicationEmails(req.params.applicationId, req.body)
+    return emailModel.updateApplicationEmails(applicationId, req.body)
 
   }
 

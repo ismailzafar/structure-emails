@@ -6,6 +6,31 @@ import {q} from '../../src/jobs/send'
 
 const server = new MockHTTPServer()
 
+const createOrgAndApp = async function(){
+  // getting an organization and application Ids
+  var res0 = await new MockHTTPServer()
+    .post(`/api/${process.env.API_VERSION}/organizations`)
+    .send({
+      title: 'work it'
+    })
+
+  const org = res0.body.pkg
+  const orgId = org.id
+
+  var app = await new MockHTTPServer()
+    .post(`/api/${process.env.API_VERSION}/applications`)
+    .set('organizationid', orgId)
+    .send({
+      desc: '',
+      title: 'App 45'
+    })
+
+  const appId = app.body.pkg.id
+
+  return {orgId, appId}
+
+}
+
 describe('Routes', function() {
 
   before(function() {
@@ -25,45 +50,44 @@ describe('Routes', function() {
 
   it('should create an application email object', async function() {
 
-    var appRes = await server
-      .post(`/api/${process.env.API_VERSION}/applications`)
-      .send({
-        title: 'Richfield Sports'
-      })
-
-    const app = appRes.body.pkg
+    const {orgId, appId} = await createOrgAndApp()
 
     var emailRes = await server
-      .post(`/api/${process.env.API_VERSION}/emails/applications/${app.id}`)
+      .post(`/api/${process.env.API_VERSION}/emails`)
+      .set('organizationid', orgId)
+      .set('applicationid', appId)
       .send()
 
-    expect(emailRes.body.pkg.id).to.equal(app.id)
+    expect(emailRes.body.pkg.id).to.equal(appId)
 
   })
 
   it('should get an application email object', async function() {
 
-    var appRes = await server
-      .post(`/api/${process.env.API_VERSION}/applications`)
-      .send({
-        title: 'Richfield Sports'
-      })
-
-    const app = appRes.body.pkg
+    const {orgId, appId} = await createOrgAndApp()
 
     var emailRes = await server
-      .post(`/api/${process.env.API_VERSION}/emails/applications/${app.id}`)
+      .post(`/api/${process.env.API_VERSION}/emails`)
+      .set('organizationid', orgId)
+      .set('applicationid', appId)
       .send()
 
     emailRes = await server
-      .patch(`/api/${process.env.API_VERSION}/emails/applications/${app.id}`)
+      .patch(`/api/${process.env.API_VERSION}/emails`)
+      .set('organizationid', orgId)
+      .set('applicationid', appId)
       .send({
         inviteUser: 'Welcome {{userId}}!'
       })
 
+    emailRes = await server
+      .get(`/api/${process.env.API_VERSION}/emails`)
+      .set('organizationid', orgId)
+      .set('applicationid', appId)
+
     const emails = emailRes.body.pkg
 
-    expect(emails.id).to.equal(app.id)
+    expect(emails.id).to.equal(appId)
     expect(emails.inviteUser).to.equal('Welcome {{userId}}!')
 
   })

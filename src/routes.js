@@ -1,19 +1,18 @@
 import Controller from './controllers/email'
-import Dispatcher from 'structure-dispatcher'
+import {dispatch} from 'structure-dispatcher'
+
 const express = require('express')
 const routes = express.Router()
-const dispatcher = new Dispatcher()
-const dispatch = dispatcher.dispatch
-const respond = dispatcher.respond
 
 import schemaSend from './schemas/send'
 
 const controller = new Controller()
 
-routes.get(`/applications/:applicationId`, dispatch(controller, 'getApplicationEmails'), respond())
-routes.patch(`/applications/:applicationId`, dispatch(controller, 'updateApplicationEmails'), respond())
-routes.post(`/applications/:applicationId`, dispatch(controller, 'createApplicationEmails'), respond())
-routes.post(`/`, schemaSend, dispatch(controller, 'send'), respond())
+routes.post(`/send`, schemaSend, dispatch(controller, 'send'))
+
+routes.get(`/`,   dispatch(controller, 'getApplicationEmails'))
+routes.patch(`/`, dispatch(controller, 'updateApplicationEmails'))
+routes.post(`/`,  dispatch(controller, 'createApplicationEmails'))
 
 export default function routesHandler(options = {}) {
 

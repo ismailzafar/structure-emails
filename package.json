@@ -1,6 +1,6 @@
 {
   "name": "structure-emails",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Emails",
   "main": "dist/index.js",
   "dependencies": {
@@ -10,10 +10,10 @@
     "nodemailer": "^2.6.4",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "rethinkdb-job-queue": "^1.0.0",
-    "structure-applications": "0.0.13",
-    "structure-dispatcher": "0.0.32",
+    "structure-applications": "0.0.16",
+    "structure-dispatcher": "0.0.37",
     "structure-driver": "0.0.3",
-    "structure-job": "0.0.5",
+    "structure-job": "0.0.7",
     "structure-root-controller": "0.0.3",
     "structure-root-model": "0.0.19"
   },
@@ -37,15 +37,13 @@
     "reqlite": "^2.3.0",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
-    "structure-applications": "0.0.8",
     "structure-migrations": "0.0.11",
-    "structure-plugins": "0.0.24",
-    "structure-router": "0.0.7",
-    "structure-server": "0.0.10",
+    "structure-plugins": "0.0.25",
+    "structure-router": "0.0.9",
+    "structure-server": "0.0.12",
     "structure-test-helpers": "0.0.3",
-    "structure-users": "0.0.10",
-    "supertest": "^2.0.0",
-    "supertest-as-promised": "^4.0.0"
+    "structure-users": "0.0.31",
+    "supertest": "^2.0.1"
   },
   "scripts": {
     "compile": "node_modules/.bin/babel src -d dist -D -s",
