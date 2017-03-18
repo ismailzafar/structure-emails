@@ -25,6 +25,7 @@ class SendEmailJob extends Job {
       try {
 
         const data = job.data
+        data.from = data.from || process.env.EMAIL_FROM
 
         const request = sg.emptyRequest({
           method: 'POST',
@@ -41,7 +42,7 @@ class SendEmailJob extends Job {
               },
             ],
             from: {
-              email: data.from || process.env.EMAIL_FROM,
+              email: data.from,
             },
             content: [
               {
@@ -51,6 +52,8 @@ class SendEmailJob extends Job {
             ],
           },
         })
+
+        logger.info('Sendgrid email data package', data)
 
         const response = await sg.API(request)
 
