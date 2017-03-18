@@ -3,7 +3,7 @@ import {plugins} from 'structure-middleware'
 import {authenticateApplicationEntity} from 'structure-auth-entity'
 
 export default [
-  authenticateApplicationEntity,
+  //authenticateApplicationEntity,
   plugins,
   respond(),
   errors()

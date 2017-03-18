@@ -2,7 +2,7 @@ import Controller from './controllers/email'
 import migrations from './migrations'
 import Model from './models/email'
 import routes from './routes'
-import sendEmail from './jobs/send'
+import sendEmailJob from './jobs/send'
 
 export default function pluginInterface(options = {}) {
 
@@ -18,7 +18,7 @@ const resources = {
     Email: Controller
   },
   job: {
-    send: sendEmail
+    send: sendEmailJob
   },
   models: {
     Email: Model
@@ -30,8 +30,11 @@ const settings = {
   pluginName: 'emails'
 }
 
+const sendEmail = sendEmailJob.queue
+
 export {EmailController}
 export {EmailModel}
 export {resources}
 export {sendEmail}
+export {sendEmailJob}
 export {settings}

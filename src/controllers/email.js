@@ -46,7 +46,7 @@ export default class Controller extends RootController {
     const applicationId = req.headers.applicationid
     const pkg = req.body
 
-    emailJob(pkg)
+    emailJob.queue(pkg)
 
     return Promise.resolve()
 

@@ -34,6 +34,7 @@ const createOrgAndApp = async function(){
 describe('Routes', function() {
 
   before(function() {
+    this.timeout(10000)
 
     this.migration = new Migrations({
       db: 'test',
@@ -45,6 +46,8 @@ describe('Routes', function() {
   })
 
   afterEach(function() {
+    this.timeout(10000)
+
     return this.migration.purge()
   })
 
@@ -93,10 +96,10 @@ describe('Routes', function() {
   })
 
   it.skip('should send an email', async function() {
-    this.timeout(5000)
+    this.timeout(10000)
 
     var res = await server
-      .post(`/api/${process.env.API_VERSION}/emails`)
+      .post(`/api/${process.env.API_VERSION}/emails/send`)
       .send({
         from: 'bob@f12.tech',
         to: 'mail@chrisabrams.com',
@@ -108,7 +111,11 @@ describe('Routes', function() {
     return new Promise( (resolve, reject) => {
 
       q.on('completed', () => {
-        resolve()
+        console.error('completed')
+
+        setTimeout(function() {
+          resolve()
+        }, 5000)
       })
 
     })
