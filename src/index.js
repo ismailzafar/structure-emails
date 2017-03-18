@@ -30,7 +30,7 @@ const settings = {
   pluginName: 'emails'
 }
 
-const sendEmail = sendEmailJob.queue
+const sendEmail = sendEmailJob.queue.bind(sendEmailJob)
 
 export {EmailController}
 export {EmailModel}
