@@ -2,7 +2,8 @@ import Job from 'structure-job'
 import logger from 'structure-logger'
 import r from 'structure-driver'
 
-const sg = require('sendgrid')(process.env.SENDGRID_API_KEY)
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 class SendEmailJob extends Job {
 
@@ -17,55 +18,44 @@ class SendEmailJob extends Job {
 
   }
 
-  handler(job) {
+  async handler(job) {
+
     logger.debug('Handler fired')
 
-    return new Promise( async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
       try {
 
         const data = job.data
         data.from = data.from || process.env.EMAIL_FROM
 
-        const request = sg.emptyRequest({
-          method: 'POST',
-          path: '/v3/mail/send',
-          body: {
-            personalizations: [
-              {
-                to: [
-                  {
-                    email: data.to,
-                  },
-                ],
-                subject: data.subject || '' // Subject line,
-              },
-            ],
-            from: {
-              email: data.from,
-            },
-            content: [
-              {
-                type: 'text/plain',
-                value: data.text,
-              },
-            ],
-          },
-        })
-
         logger.info('Sendgrid email data package', data)
 
-        const response = await sg.API(request)
+        const msg = {
+          to: data.to,
+          from: data.from,
+          subject: data.subject,
+          text: data.text,
+        };
 
-        logger.info('Sendgrid email delivered', response)
+        sgMail.send(msg, (error, result) => {
 
-        resolve()
+          if (error) {
+            logger.error('Error sending email', error.toString())
+            return reject(error)
+          }
 
-      }
-      catch(e) {
+          logger.info('Sendgrid email delivered')
+
+          resolve()
+
+        })
+
+      } catch(e) {
+
         logger.error('Error sending email', e)
-
         reject(e)
+
       }
 
     })
